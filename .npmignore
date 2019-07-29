@@ -2,6 +2,7 @@ private/
 build/
 node_modules/
 test/
+.vscode/*
 **/*.ts
 **/*.js.map
 **/*.bak.*
@@ -10,3 +11,4 @@ test/
 .editorconfig
 .gitignore
 .travis.yml
+.clang-format

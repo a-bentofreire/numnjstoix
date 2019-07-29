@@ -3,7 +3,7 @@
   "uuid": "06dfcb4f-6f04-44f9-98a1-b1b31044678c",
   "displayName": "numnjs",
   "description": "Lightweight numerical analysis C++ add-on for nodejs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "a-bentofreire",
   "keywords": [
     "data science",
@@ -33,8 +33,11 @@
   },
   "main": "./main.js",
   "scripts": {
+    "npm:publish": "npm publish",
+    "npm:publish-dry-run": "npm publish --dry-run",
     "install": "node-gyp rebuild",
     "test": "mocha",
+    "test-version": "mocha test/ver.js",
     "test-one": "mocha test/matrix.js",
     "workbench1": "node test/workbench/workbench1.js",
     "build-and-test": "npm run build && npm run test",
