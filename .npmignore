@@ -1,0 +1,12 @@
+private/
+build/
+node_modules/
+test/
+**/*.ts
+**/*.js.map
+**/*.bak.*
+*.bak.md
+*.log
+.editorconfig
+.gitignore
+.travis.yml

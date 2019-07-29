@@ -1,0 +1,26 @@
+language: node_js
+sudo: false
+node_js:
+  - "10"
+  - "11"
+install:
+  - npm install
+script:
+  - npm test
+os:
+  - linux
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+env:
+  # Environment variables common to all jobs:
+  global:
+    - CC=gcc
+    - C_COMPILER=gcc
+    - CXX=g++-4.8
+    - CXX_COMPILER=g++
+    - LINKER=g++
+

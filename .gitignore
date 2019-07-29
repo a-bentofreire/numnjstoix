@@ -1,0 +1,7 @@
+private/
+build/
+node_modules/
+**/*.js.map
+**/*.bak.*
+*.bak.md
+*.log

@@ -1,0 +1,51 @@
+{
+  "name": "numnjs",
+  "uuid": "06dfcb4f-6f04-44f9-98a1-b1b31044678c",
+  "displayName": "numnjs",
+  "description": "Lightweight numerical analysis C++ add-on for nodejs",
+  "version": "0.1.0",
+  "publisher": "a-bentofreire",
+  "keywords": [
+    "data science",
+    "numerical analysis",
+    "math",
+    "array"
+  ],
+  "readme": "README.md",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Alexandre Bento Freire",
+    "email": "devpieces@a-bentofreire.com",
+    "url": "https://github.com/a-bentofreire"
+  },
+  "license": "MIT+uuid",
+  "engines": {
+    "node": "*"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "homepage": "https://devpieces.a-bentofreire.com/products/numnjs",
+  "bugs": "https://github.com/a-bentofreire/numnjs/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-bentofreire/numnjs"
+  },
+  "main": "./main.js",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "test": "mocha",
+    "test-one": "mocha test/matrix.js",
+    "workbench1": "node test/workbench/workbench1.js",
+    "build-and-test": "npm run build && npm run test",
+    "build-and-workbench1": "npm run build && npm run workbench1",
+    "clean": "node-gyp clean",
+    "configure": "node-gyp configure",
+    "build": "node-gyp build"
+  },
+  "gypfile": true,
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
