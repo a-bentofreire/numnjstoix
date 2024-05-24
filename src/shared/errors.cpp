@@ -1,8 +1,6 @@
-// uuid: f604324b-935e-4fce-be71-3ea0730c25c5
-
 // ------------------------------------------------------------------------
-// Copyright (c) 2019 Alexandre Bento Freire. All rights reserved.
-// Licensed under the MIT License+uuid License. See License.txt for details
+// Copyright (c) 2019-2024 Alexandre Bento Freire. All rights reserved.
+// Licensed under the MIT License
 // ------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------

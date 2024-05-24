@@ -1,9 +1,8 @@
 {
   "name": "numnjs",
-  "uuid": "06dfcb4f-6f04-44f9-98a1-b1b31044678c",
   "displayName": "numnjs",
   "description": "Lightweight numerical analysis C++ add-on for nodejs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "a-bentofreire",
   "keywords": [
     "data science",
@@ -18,7 +17,7 @@
     "email": "devpieces@a-bentofreire.com",
     "url": "https://github.com/a-bentofreire"
   },
-  "license": "MIT+uuid",
+  "license": "MIT",
   "engines": {
     "node": "*"
   },
