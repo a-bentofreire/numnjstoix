@@ -21,7 +21,7 @@ namespace numnjs {
 //                               Constants
 // ------------------------------------------------------------------------
 
-#define VERSION "0.1.1"
+#define VERSION "0.2.0"
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -42,7 +42,7 @@ void verFunc(const v8args &args) {
 //                               Initialize Functions
 // ------------------------------------------------------------------------
 
-void Initialize(v8exports exports) {
+void Initialize(v8exports exports, v8::Local<v8::Value> module, void* priv) {
 
   NODE_SET_METHOD(exports, "ver", verFunc);
   initializeTrigonometric(exports);

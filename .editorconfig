@@ -1,6 +1,6 @@
 root = true
 
-[*, *.json, *.js, *.scss, *.html, *.cc]
+[*, *.json, *.js, *.scss, *.html, *.cc, *.cpp]
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true

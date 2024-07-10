@@ -2,7 +2,7 @@
   "name": "numnjs",
   "displayName": "numnjs",
   "description": "Lightweight numerical analysis C++ add-on for nodejs",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publisher": "a-bentofreire",
   "keywords": [
     "data science",
@@ -24,7 +24,7 @@
   "directories": {
     "test": "test"
   },
-  "homepage": "https://devpieces.a-bentofreire.com/products/numnjs",
+  "homepage": "https://www.devpieces.com/en/projects/numnjs",
   "bugs": "https://github.com/a-bentofreire/numnjs/issues",
   "repository": {
     "type": "git",
@@ -47,7 +47,7 @@
   },
   "gypfile": true,
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.4.1",
     "mocha": "^5.2.0"
   }
 }

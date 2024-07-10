@@ -17,7 +17,7 @@ namespace numnjs {
 // ------------------------------------------------------------------------
 
 void returnString(v8::Isolate *isolate, const char *value, const v8args &args) {
-  args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, value));
+  args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, value).ToLocalChecked());
 }
 
 void returnNumber(v8::Isolate *isolate, double value, const v8args &args) {

@@ -54,7 +54,7 @@ enum NJSArray_Type {
 class NJSInputArray {
 private:
   v8::Local<v8::TypedArray> inputTA;
-  v8localArray inputA;
+  v8::Local<v8::Array> inputA;
   std::vector<v8localArray> *matrixRows = NULL;
 
 public:
@@ -83,7 +83,7 @@ public:
   bool init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
             NSJAllow_Type allowType, size_t argNumber);
 
-  double getDouble(size_t i);
+  double getDouble(size_t i, v8::Local<v8::Context> context);
 };
 
 /**
@@ -202,6 +202,11 @@ void returnMustBeSquareMatrix(v8::Isolate *isolate, size_t argNumber);
  */
 void returnException(v8::Isolate *isolate, const char *msg, ...);
 
+/**
+ * Throws a v8 Node Error exception but it doesn't throws a C++ exception.
+ */
+void returnNodeError(v8::Isolate *isolate);
+
 // ------------------------------------------------------------------------
 //                                Handler Functions (handlers.cpp)
 // ------------------------------------------------------------------------
@@ -286,7 +291,7 @@ public:
 
   bool init(v8::Isolate *isolate, const v8args &args, size_t numInputs,
             NSJAllow_Type *allowTypes);
-  void loadData();
+  void loadData(v8::Isolate *isolate);
 
   inline void returnAsNumber(double outValue) {
     returnNumber(isolate, outValue, *argsp);

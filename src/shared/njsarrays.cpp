@@ -37,7 +37,7 @@ const njsallow_typerec allowTypes[] = {
      /* allowMatrix : */ true,
      /* allowFloatArray : */ true},
 
-     // ta_MATRIX
+    // ta_MATRIX
     {/* allowNumber : */ false,
      /* allowArray : */ false,
      /* allowMatrix : */ true,
@@ -53,6 +53,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
                          NSJAllow_Type allowType, size_t argNumber) {
 
   const njsallow_typerec &allowTypeRec = allowTypes[allowType];
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
   if (src->IsArray()) {
     arrayType = typ_ARRAY;
@@ -61,8 +62,8 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
     dim1 = _dim1;
 
     if (_dim1 > 0) {
-      v8::Local<v8::Value> el = inputA->Get(0);
-      if (el->IsArray()) {
+      v8::Local<v8::Value> el;
+      if (inputA->Get(context, 0).ToLocal(&el) && el->IsArray()) {
         if (!allowTypeRec.allowMatrix) {
           returnTypeMismatch(isolate, argNumber);
           return false;
@@ -75,16 +76,17 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
         matrixRows = new std::vector<v8localArray>(_dim1);
 
         for (size_t i = 0; i < _dim1; i++) {
-          v8::Local<v8::Value> el = inputA->Get(i);
-          v8localArray *row = &((*matrixRows)[i]);
-          *row = v8localArray::Cast(el);
-          size_t rowSize = (*row)->Length();
-          if (i == 0) {
-            dim2 = rowSize;
-          } else if (dim2 != rowSize) {
+          if (inputA->Get(context, i).ToLocal(&el)) {
+            v8localArray *row = &((*matrixRows)[i]);
+            *row = v8localArray::Cast(el);
+            size_t rowSize = (*row)->Length();
+            if (i == 0) {
+              dim2 = rowSize;
+            } else if (dim2 != rowSize) {
 
-            returnTypeMismatch(isolate, argNumber);
-            return false;
+              returnTypeMismatch(isolate, argNumber);
+              return false;
+            }
           }
         }
         dim2 = (*matrixRows)[0]->Length();
@@ -102,8 +104,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
       return false;
     }
     isTypedArray = true;
-    arrayType =
-        src->IsFloat32Array() ? typ_FLOATARRAY32 : typ_FLOATARRAY64;
+    arrayType = src->IsFloat32Array() ? typ_FLOATARRAY32 : typ_FLOATARRAY64;
     inputTA = v8::Local<v8::TypedArray>::Cast(src);
     dim1 = inputTA->Length();
 
@@ -113,10 +114,15 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
       return false;
     }
     isSingleDim = false;
-    isNumber = true;
     nrdims = 0;
     dim1 = 1;
-    numberValue = src->NumberValue();
+    v8::Maybe<double> maybeEl = src->NumberValue(context);
+    if (maybeEl.IsJust()) {
+      numberValue = maybeEl.FromJust();
+      isNumber = true;
+    } else {
+      return false;
+    }
   }
 
   else {
@@ -128,7 +134,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
   return true;
 }
 
-double NJSInputArray::getDouble(size_t i) {
+double NJSInputArray::getDouble(size_t i, v8::Local<v8::Context> context) {
   v8::Local<v8::Value> el;
 
   switch (nrdims) {
@@ -136,13 +142,22 @@ double NJSInputArray::getDouble(size_t i) {
     return numberValue;
 
   case 1:
-    el = isTypedArray ? inputTA->Get(i) : inputA->Get(i);
-    return el->NumberValue();
+    if (isTypedArray ? inputTA->Get(context, i).ToLocal(&el)
+                     : inputA->Get(context, i).ToLocal(&el)) {
+      v8::Maybe<double> maybeEl = el->NumberValue(context);
+      return maybeEl.IsJust() ? maybeEl.FromJust() : std::nan("");
+    } else {
+      return std::nan("");
+    }
 
   case 2:
     v8localArray &row = (*matrixRows)[i / dim2];
-    el = row->Get(i % dim2);
-    return el->NumberValue();
+    if (row->Get(context, i % dim2).ToLocal(&el)) {
+      v8::Maybe<double> maybeEl = el->NumberValue(context);
+      return maybeEl.IsJust() ? maybeEl.FromJust() : std::nan("");
+    } else {
+      return std::nan("");
+    }
   }
   return 0; // to avoid warning message
 }
@@ -189,8 +204,8 @@ void NJSOutputArray::init(v8::Isolate *isolate, NJSArray_Type arrayType,
 
 void NJSOutputArray::initFromInput(v8::Isolate *isolate,
                                    const NJSInputArray &inputArray) {
-  init(isolate, inputArray.arrayType, inputArray.elCount,
-             inputArray.nrdims, inputArray.dim1, inputArray.dim2);
+  init(isolate, inputArray.arrayType, inputArray.elCount, inputArray.nrdims,
+       inputArray.dim1, inputArray.dim2);
 }
 
 void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsarray &values,
@@ -199,25 +214,38 @@ void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsarray &values,
   size_t _elCount = elCount;
   size_t _dim2 = dim2;
   v8::Local<v8::Object> row;
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
+  v8::Maybe<bool> result1 = v8::Just(true);
+  v8::Maybe<bool> result2 = v8::Just(true);
+  v8::Maybe<bool> result3 = v8::Just(true);
 
   for (size_t i = 0; i < _elCount; i++) {
     v8::Local<v8::Number> v = v8::Number::New(isolate, values[i]);
     switch (nrdims) {
     case 1:
       // @TODO: Speed the process of setting each value
-      res->Set(i, v);
+      result1 = res->Set(context, i, v);
+      if (result1.IsNothing() || !result1.FromJust()) {
+        returnNodeError(isolate);
+      }
       break;
 
-    case 2: {
+    case 2:
       size_t p1 = i / _dim2;
       size_t p2 = i % _dim2;
       if (p2 == 0) {
         row = v8::Array::New(isolate, _dim2);
-        res->Set(p1, row);
+        result2 = res->Set(context, p1, row);
+        if (result2.IsNothing() || !result2.FromJust()) {
+          returnNodeError(isolate);
+        }
       }
-      row->Set(p2, v);
-    } break;
+      result3 = row->Set(context, p2, v);
+      if (result3.IsNothing() || !result3.FromJust()) {
+        returnNodeError(isolate);
+      }
     }
+    break;
   }
   args.GetReturnValue().Set(res);
 }

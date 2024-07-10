@@ -1,4 +1,4 @@
-private/
+.private/
 build/
 node_modules/
 **/*.js.map

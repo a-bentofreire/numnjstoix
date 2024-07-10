@@ -59,8 +59,10 @@ void aggregate1Handler(const v8args &args, double acc,
   njsarray validValues;
   size_t validLen = 0;
   auto elCount = input.elCount;
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
   for (size_t i = 0; i < elCount; i++) {
-    double v = input.getDouble(i);
+    double v = input.getDouble(i, context);
     if (isValidValue(v)) {
       acc = calc(v, acc);
       validLen++;
@@ -130,11 +132,12 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
 
   njsarray values(elCount0);
   size_t validLen = 0;
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
   // #pragma omp parallel private(validLen)
   for (size_t i = 0; i < elCount0; i++) {
-    double v0 = input0.getDouble(i);
-    double v1 = input1.getDouble(i);
+    double v0 = input0.getDouble(i, context);
+    double v1 = input1.getDouble(i, context);
     if (isValidValue(v0) && isValidValue(v1)) {
       v0 = calc(v0, v1);
       // #pragma omp atomic update
@@ -177,8 +180,9 @@ void transformHandler(const v8args &args, double(calc)(double v),
   size_t validLen = 0;
   auto elCount = input.elCount;
   njsarray values(elCount);
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
   for (size_t i = 0; i < elCount; i++) {
-    double v = input.getDouble(i);
+    double v = input.getDouble(i, context);
     if (isValidValue(v)) {
       v = calc(v);
       validLen++;
@@ -240,11 +244,12 @@ bool NArrayInputs::init(v8::Isolate *isolate, const v8args &args,
   return true;
 }
 
-void NArrayInputs::loadData() {
+void NArrayInputs::loadData(v8::Isolate *isolate) {
 
   auto _numInputs = numInputs;
   valuesList.resize(_numInputs);
   validLenList.resize(_numInputs);
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
   for (size_t i = 0; i < _numInputs; i++) {
     auto elCount = inputs[i].elCount;
@@ -254,7 +259,7 @@ void NArrayInputs::loadData() {
     size_t validLen = 0;
 
     for (size_t j = 0; j < elCount; j++) {
-      double v = input.getDouble(j);
+      double v = input.getDouble(j, context);
       if (isValidValue(v)) {
         validLen++;
       }
@@ -281,7 +286,7 @@ void nInputsHandler(const v8args &args, size_t numInputs, size_t extraArgs,
     return;
   }
 
-  naInputs.loadData();
+  naInputs.loadData(isolate);
   if (!op(naInputs)) {
     return;
   }

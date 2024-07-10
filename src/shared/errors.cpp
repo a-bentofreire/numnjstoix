@@ -22,6 +22,7 @@ const char *ERR_MUST_BE_POSITIVE = "Argument %d must be positive";
 const char *ERR_BOTH_INPUT_MUST_SAME_LEN =
     "Both arguments must have the same length";
 const char *ERR_MUST_BE_SQUARE_MATRIX = "Argument %d must be a square matrix";
+const char *ERR_NODE = "Node error";
 
 // ------------------------------------------------------------------------
 //                               Exception Handling
@@ -43,6 +44,10 @@ void returnMustBeSquareMatrix(v8::Isolate *isolate, size_t argNumber) {
   returnException(isolate, ERR_MUST_BE_SQUARE_MATRIX, argNumber);
 }
 
+void returnNodeError(v8::Isolate *isolate) {
+  returnException(isolate, ERR_NODE);
+}
+
 void returnException(v8::Isolate *isolate, const char *msg, ...) {
 
   va_list args;
@@ -52,7 +57,7 @@ void returnException(v8::Isolate *isolate, const char *msg, ...) {
   va_end(args);
 
   isolate->ThrowException(
-      v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, buf)));
+      v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, buf).ToLocalChecked()));
 }
 
 } // namespace numnjs

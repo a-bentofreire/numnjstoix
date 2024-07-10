@@ -1,6 +1,6 @@
 # Description
 
-numnjs is a lightweight numerical analysis C++ add-on for nodejs.  
+[numnjs](https://www.devpieces.com/en/projects/numnjs) is a lightweight numerical analysis C++ add-on for nodejs.  
 Although, numnjs has been tested, it's still in a development phase, and its API can change in future versions.  
 At the moment, numnjs doesn't implement any major speed optimizations to archive maximum speed.  
 It's biggest speed gain derives from the fact that it's implemented in C++ as opposed to JavaScript.  
@@ -19,6 +19,8 @@ Use `numnjs` when:
 `[sudo] npm install -g numnjs`
 
 ## Requirements
+
+numnjs v0.2+ requires node 22.2 or above.
 
 `numnjs` uses `node-gyp` to compile the C++ addon to binary format.  
 So read the [node-gyp](https://www.npmjs.com/package/node-gyp) requirements section to determined what is the required software for your platform.  
@@ -200,4 +202,4 @@ MIT License
 
 ## Copyrights
 
-(c) 2019-2024 Alexandre Bento Freire
+(c) 2019-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)
