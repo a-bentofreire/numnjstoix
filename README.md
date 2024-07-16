@@ -1,6 +1,6 @@
 # Description
 
-[numnjs](https://www.devpieces.com/en/projects/numnjs) is a lightweight numerical analysis C++ add-on for nodejs.  
+[numnjs](https://www.devtoix.com/en/projects/numnjs) is a lightweight numerical analysis C++ add-on for nodejs.  
 Although, numnjs has been tested, it's still in a development phase, and its API can change in future versions.  
 At the moment, numnjs doesn't implement any major speed optimizations to archive maximum speed.  
 It's biggest speed gain derives from the fact that it's implemented in C++ as opposed to JavaScript.  

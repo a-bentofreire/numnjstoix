@@ -2,7 +2,7 @@
   "name": "numnjs",
   "displayName": "numnjs",
   "description": "Lightweight numerical analysis C++ add-on for nodejs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "a-bentofreire",
   "keywords": [
     "data science",
@@ -14,7 +14,7 @@
   "readmeFilename": "README.md",
   "author": {
     "name": "Alexandre Bento Freire",
-    "email": "devpieces@a-bentofreire.com",
+    "email": "devtoix@a-bentofreire.com",
     "url": "https://github.com/a-bentofreire"
   },
   "license": "MIT",
@@ -24,11 +24,11 @@
   "directories": {
     "test": "test"
   },
-  "homepage": "https://www.devpieces.com/en/projects/numnjs",
+  "homepage": "https://www.devtoix.com/en/projects/numnjs",
   "bugs": "https://github.com/a-bentofreire/numnjs/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/a-bentofreire/numnjs"
+    "url": "git+https://github.com/a-bentofreire/numnjs.git"
   },
   "main": "./main.js",
   "scripts": {
