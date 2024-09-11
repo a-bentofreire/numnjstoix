@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "target_name": "numnjs",
+            "target_name": "numnjstoix",
             "sources": [
                 "src/shared/errors.cpp",
                 "src/shared/handlers.cpp",
@@ -18,7 +18,7 @@
                 "src/miscellaneous.cpp",
                 "src/matrix.cpp",
                 "src/statistics.cpp",
-                "src/numnjs.cpp"
+                "src/numnjstoix.cpp"
             ],
             "cflags": [
                 "-std=c++11",

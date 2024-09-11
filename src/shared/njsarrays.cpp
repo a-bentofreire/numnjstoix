@@ -7,31 +7,31 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <cmath>
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Global Variables
 // ------------------------------------------------------------------------
 
-const njsallow_typerec allowTypes[] = {
+const njs_allow_typerec allowTypes[] = {
 
-    // ta_ARRAY_FLOATARRAY
+    // ta_ARRAY_FLOAT_ARRAY
     {/* allowNumber : */ false,
      /* allowArray : */ true,
      /* allowMatrix : */ false,
      /* allowFloatArray : */ true},
 
-    // ta_ARRAY_FLOATARRAY_MATRIX
+    // ta_ARRAY_FLOAT_ARRAY_MATRIX
     {/* allowNumber : */ false,
      /* allowArray : */ true,
      /* allowMatrix : */ true,
      /* allowFloatArray : */ true},
 
-    // ta_ARRAY_FLOATARRAY_MATRIX_NUMBER
+    // ta_ARRAY_FLOAT_ARRAY_MATRIX_NUMBER
     {/* allowNumber : */ true,
      /* allowArray : */ true,
      /* allowMatrix : */ true,
@@ -52,7 +52,7 @@ NJSInputArray::~NJSInputArray() { delete matrixRows; }
 bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
                          NSJAllow_Type allowType, size_t argNumber) {
 
-  const njsallow_typerec &allowTypeRec = allowTypes[allowType];
+  const njs_allow_typerec &allowTypeRec = allowTypes[allowType];
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
   if (src->IsArray()) {
@@ -72,7 +72,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
         arrayType = typ_MATRIX;
         isSingleDim = false;
         isMatrix = true;
-        nrdims = 2;
+        nrDims = 2;
         matrixRows = new std::vector<v8localArray>(_dim1);
 
         for (size_t i = 0; i < _dim1; i++) {
@@ -93,7 +93,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
       }
     }
 
-    if (!allowTypeRec.allowArray && nrdims == 1) {
+    if (!allowTypeRec.allowArray && nrDims == 1) {
       returnTypeMismatch(isolate, argNumber);
       return false;
     }
@@ -104,7 +104,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
       return false;
     }
     isTypedArray = true;
-    arrayType = src->IsFloat32Array() ? typ_FLOATARRAY32 : typ_FLOATARRAY64;
+    arrayType = src->IsFloat32Array() ? typ_FLOAT_ARRAY32 : typ_FLOAT_ARRAY64;
     inputTA = v8::Local<v8::TypedArray>::Cast(src);
     dim1 = inputTA->Length();
 
@@ -114,7 +114,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
       return false;
     }
     isSingleDim = false;
-    nrdims = 0;
+    nrDims = 0;
     dim1 = 1;
     v8::Maybe<double> maybeEl = src->NumberValue(context);
     if (maybeEl.IsJust()) {
@@ -137,7 +137,7 @@ bool NJSInputArray::init(v8::Isolate *isolate, const v8::Local<v8::Value> src,
 double NJSInputArray::getDouble(size_t i, v8::Local<v8::Context> context) {
   v8::Local<v8::Value> el;
 
-  switch (nrdims) {
+  switch (nrDims) {
   case 0:
     return numberValue;
 
@@ -167,13 +167,13 @@ double NJSInputArray::getDouble(size_t i, v8::Local<v8::Context> context) {
 // ------------------------------------------------------------------------
 
 void NJSOutputArray::init(v8::Isolate *isolate, NJSArray_Type arrayType,
-                          size_t _elCount, size_t _nrdims, size_t _dim1,
+                          size_t _elCount, size_t _nr_dims, size_t _dim1,
                           size_t _dim2) {
 
   elCount = _elCount;
   dim1 = _dim1;
   dim2 = _dim2;
-  nrdims = _nrdims;
+  nrDims = _nr_dims;
 
   switch (arrayType) {
   case typ_MATRIX:
@@ -187,14 +187,14 @@ void NJSOutputArray::init(v8::Isolate *isolate, NJSArray_Type arrayType,
     res = v8::Array::New(isolate, _elCount);
     break;
 
-  case typ_FLOATARRAY32:
+  case typ_FLOAT_ARRAY32:
     recSize = 4;
     array_buffer = v8::ArrayBuffer::New(isolate, recSize * _elCount);
     res = v8::Float32Array::New(array_buffer, 0, _elCount);
     break;
 
   default:
-    // case typ_FLOATARRAY64:
+    // case typ_FLOAT_ARRAY64:
     recSize = 8;
     array_buffer = v8::ArrayBuffer::New(isolate, recSize * _elCount);
     res = v8::Float64Array::New(array_buffer, 0, _elCount);
@@ -204,11 +204,11 @@ void NJSOutputArray::init(v8::Isolate *isolate, NJSArray_Type arrayType,
 
 void NJSOutputArray::initFromInput(v8::Isolate *isolate,
                                    const NJSInputArray &inputArray) {
-  init(isolate, inputArray.arrayType, inputArray.elCount, inputArray.nrdims,
+  init(isolate, inputArray.arrayType, inputArray.elCount, inputArray.nrDims,
        inputArray.dim1, inputArray.dim2);
 }
 
-void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsarray &values,
+void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsArray &values,
                                   const v8args &args) {
 
   size_t _elCount = elCount;
@@ -221,7 +221,7 @@ void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsarray &values,
 
   for (size_t i = 0; i < _elCount; i++) {
     v8::Local<v8::Number> v = v8::Number::New(isolate, values[i]);
-    switch (nrdims) {
+    switch (nrDims) {
     case 1:
       // @TODO: Speed the process of setting each value
       result1 = res->Set(context, i, v);
@@ -244,10 +244,10 @@ void NJSOutputArray::setFromArray(v8::Isolate *isolate, const njsarray &values,
       if (result3.IsNothing() || !result3.FromJust()) {
         returnNodeError(isolate);
       }
+      break;
     }
-    break;
   }
   args.GetReturnValue().Set(res);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

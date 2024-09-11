@@ -7,5 +7,5 @@
  * Simple discardable tests to be executed outside mocha.
  */
 
-const numnjs = require('../../main.js');
-const shared = require('./../shared.js');
+import { numnjstoix } from '../../main.js';
+import * as shared from './../shared.js';

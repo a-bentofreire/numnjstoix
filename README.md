@@ -1,31 +1,33 @@
 # Description
 
-[numnjs](https://www.devtoix.com/en/projects/numnjs) is a lightweight numerical analysis C++ add-on for nodejs.  
-Although, numnjs has been tested, it's still in a development phase, and its API can change in future versions.  
-At the moment, numnjs doesn't implement any major speed optimizations to archive maximum speed.  
+[NumNJsToIx](https://www.devtoix.com/en/projects/numnjstoix) is a lightweight numerical analysis C++ add-on for nodejs.  
+Although, NumNJsToIx has been tested, it's still in a development phase, and its API can change in future versions.  
+At the moment, NumNJsToIx doesn't implement any major speed optimizations to archive maximum speed.  
 It's biggest speed gain derives from the fact that it's implemented in C++ as opposed to JavaScript.  
 However, future versions might be significantly faster by adding of speed optimizations.  
-Many numnjs functions handle `NaN` and `Inf` gracefully by bypassing their calculations. Although, this behavior might change in order to speed up the calculations.
+Many NumNJsToIx functions handle `NaN` and `Infinity` gracefully by bypassing their calculations. Although, this behavior might change in order to speed up the calculations.
 
-Use `numnjs` when:
+If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/numnjstoix#support-this-project) on how to contribute.  
+
+Use **NumNJsToIx** when:
 
 - You don't need a full-blown numerical analysis package.
 - You want a functionality similar to [numpy](http://www.numpy.org/).
-- Your data contains `NaN` and `Inf`.
+- Your data contains `NaN` and `Infinity`.
 - Your data can be Arrays, TypedArray (Float32Array and Float64Array), or matrices (Array of Array).
 
 ## Installation
 
-`[sudo] npm install -g numnjs`
+`[sudo] npm install -g numnjstoix`
 
 ## Requirements
 
-numnjs v0.2+ requires node 22.2 or above.
+NumNJsToIx v0.2+ requires node 22.2 or above.
 
-`numnjs` uses `node-gyp` to compile the C++ addon to binary format.  
+NumNJsToIx uses `node-gyp` to compile the C++ addon to binary format.  
 So read the [node-gyp](https://www.npmjs.com/package/node-gyp) requirements section to determined what is the required software for your platform.  
   
-`numnjs` is implemented in [C++11](https://en.wikipedia.org/wiki/C%2B%2B11), therefore the C++ compiler must support C++11 compilation.
+NumNJsToIx is implemented in [C++11](https://en.wikipedia.org/wiki/C%2B%2B11), therefore the C++ compiler must support C++11 compilation.
 
 ## Data Types
 
@@ -35,23 +37,23 @@ So read the [node-gyp](https://www.npmjs.com/package/node-gyp) requirements sect
 - **k**: Scalar (Real Number).
 - **d**: Dimensions (Positive number).
 - **T**: Output Data Type:
-  - numnjs.AUTO = 0;
-  - numnjs.NUMBER = 1;
-  - numnjs.ARRAY = 10;
-  - numnjs.MATRIX = 11;
-  - numnjs.FLOATARRAY32 = 20;
-  - numnjs.FLOATARRAY64 = 21;
+  - numnjstoix.AUTO = 0;
+  - numnjstoix.NUMBER = 1;
+  - numnjstoix.ARRAY = 10;
+  - numnjstoix.MATRIX = 11;
+  - numnjstoix.FLOAT_ARRAY32 = 20;
+  - numnjstoix.FLOAT_ARRAY64 = 21;
 
 ## Functions Categories
 
-numnjs is organized into files to resemble the numpy method's organization, as defined in these documents:
+NumNJsToIx is organized into files to resemble the numpy method's organization, as defined in these documents:
 
 - [Mathematical](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.math.html).
 - [Matrix](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.matlib.html).
 - [Statistics](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.statistics.html).
 - [Linear algebra](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.linalg.html).
 
-But internally, numnjs functions are organized according to their data inputs and outputs:
+But internally, NumNJsToIx functions are organized according to their data inputs and outputs:
 
 | Category | Description |  
 | ------------- | ------------- |  
@@ -65,12 +67,12 @@ Note: For TypedArray different from Float32Array or Float64Array, it returns Flo
 
 ## Invalid Data
 
-`Inf` and `NaN` are ignored in the calculations.  
+`Infinity` and `NaN` are ignored in the calculations.  
 When there is more than one data input, if at least one is invalid, it returns the value of the first input if this invalid other the 2nd input.  
   
 Example:  
-`avr([5.5,NaN,6.5,Inf])==avr([5.5,6.5])`.  
-`add([4,Inf,6,NaN],[6,NaN,Inf,Inf])=[10,Inf,Inf,Nan]`.  
+`avr([5.5,NaN,6.5,Infinity])==avr([5.5,6.5])`.  
+`add([4,Infinity,6,NaN],[6,NaN,Infinity,Infinity])=[10,Infinity,Infinity,Nan]`.  
 
 ## Functions
 
@@ -78,7 +80,7 @@ Example:
 
 | Function | Description |  
 | ------------- | ------------- |  
-| s = **ver**() | Returns the numnjs version in semver format |
+| s = **ver**() | Returns the numnjstoix version in semver format |
 
 ### Trigonometric
 
@@ -176,25 +178,46 @@ Example:
 | v = **std**(a) | Returns the standard deviation |
 | v = **skew**(a) | Returns the skewness |
 | v = **kurtosis**(a<br>{, fisher}) | Returns the kurtosis (default is Pearson's definition)<br>If the 2nd parameter is True, uses Fisher’s definition<br>The default it's the opposite of numpy |
-| v = **cov**(a1, a2) | Returns the covariance measure<br>Uses an unbiased estimate (N-1 denominator)<br>`numpy.cov(x,y)=[[numnjs.cov(x,x),numnjs.cov(x,y)],[numnjs.cov(y,x),numnjs.cov(y,y)]]`  |
+| v = **cov**(a1, a2) | Returns the covariance measure<br>Uses an unbiased estimate (N-1 denominator)<br>`numpy.cov(x,y)=[[numnjstoix.cov(x,x),numnjstoix.cov(x,y)],[numnjstoix.cov(y,x),numnjstoix.cov(y,y)]]`  |
 
 ## Example
 
 ```js
-  const numnjs = require('numnjs');
+  import { numnjstoix } from 'main.js';
   const input1 = [4.5, 6.5, -5.6, NaN];
-  const output1 = numnjs.min(input1);
+  const output1 = numnjstoix.min(input1);
   console.log(output1); // -5.6
 
-  const input2 = new Float64Array([4.5, 6.5, Inf, -6]);
-  const output2 = numnjs.negate(input2);
-  console.log(output2); // Float64Array([-4.5, -6.5, Inf, 6])
+  const input2 = new Float64Array([4.5, 6.5, Infinity, -6]);
+  const output2 = numnjstoix.negative(input2);
+  console.log(output2); // Float64Array([-4.5, -6.5, Infinity, 6])
 
-  const input3a = [[4.5, 6.5],[89, 9.7],[76, Inf]];
-  const input3b = [[14.5, -16.5],[-189, 9.7],[-76, Inf]];
-  const output3 = numnjs.multiply(input3a, input3b);
+  const input3a = [[4.5, 6.5],[89, 9.7],[76, Infinity]];
+  const input3b = [[14.5, -16.5],[-189, 9.7],[-76, Infinity]];
+  const output3 = numnjstoix.multiply(input3a, input3b);
   console.log(output3);
+// [
+//  [ 65.25, -107.25 ],
+//  [ -16821, 94.08999999999999 ],
+//  [ -5776, Infinity ]
+// ]
 ```
+
+## Support this Project
+
+If you find this project useful, consider supporting it:
+
+- Donate:  
+[![Donate via PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-rect-paypal-34px.png)](https://www.paypal.com/donate/?business=MCZDHYSK6TCKJ&no_recurring=0&item_name=Support+Open+Source&currency_code=EUR)
+
+- Visit the project [homepage](https://www.devtoix.com/en/projects/numnjstoix)
+- Give the project a ⭐ on [Github](https://github.com/a-bentofreire/numnjstoix)
+
+- Spread the word
+- Follow me:
+  - [Github](https://github.com/a-bentofreire)
+  - [LinkedIn](https://www.linkedin.com/in/abentofreire)
+  - [Twitter/X](https://x.com/devtoix)
 
 ## License
 

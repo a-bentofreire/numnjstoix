@@ -7,11 +7,11 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <cmath>
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Node Overrides
@@ -40,4 +40,4 @@ void NODE_SET_METHOD_DATA(v8::Local<v8::Object> recv, const char *name,
 
 bool isValidValue(double x) { return !(std::isinf(x) || std::isnan(x)); }
 
-} // namespace numnjs
+} // namespace numnjstoix

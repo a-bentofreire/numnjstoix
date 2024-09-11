@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs trigonometric functions.
+ * Mocha tests for numnjstoix trigonometric functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Test Cases
@@ -20,14 +20,14 @@ const shared = require('./shared.js');
 
 describe('Trigonometric', function () {
 
-  shared.addTransformCase('sin', Math.sin, numnjs.sin, true);
-  shared.addTransformCase('cos', Math.cos, numnjs.cos, true);
-  shared.addTransformCase('tan', Math.tan, numnjs.tan, true);
+  shared.addTransformCase(describe, 'sin', Math.sin, numnjstoix.sin, true);
+  shared.addTransformCase(describe, 'cos', Math.cos, numnjstoix.cos, true);
+  shared.addTransformCase(describe, 'tan', Math.tan, numnjstoix.tan, true);
 
-  shared.addTransformCase('arcsin', Math.asin, numnjs.arcsin, true);
-  shared.addTransformCase('arccos', Math.acos, numnjs.arccos, true);
-  shared.addTransformCase('arctan', Math.atan, numnjs.arctan, true);
+  shared.addTransformCase(describe, 'arcsin', Math.asin, numnjstoix.arcsin, true);
+  shared.addTransformCase(describe, 'arccos', Math.acos, numnjstoix.arccos, true);
+  shared.addTransformCase(describe, 'arctan', Math.atan, numnjstoix.arctan, true);
 
-  shared.addTransformCase('degrees', (v) => v * (180 / Math.PI), numnjs.degrees, true);
-  shared.addTransformCase('radians', (v) => v / (180 / Math.PI), numnjs.radians, true);
+  shared.addTransformCase(describe, 'degrees', (v) => v * (180 / Math.PI), numnjstoix.degrees, true);
+  shared.addTransformCase(describe, 'radians', (v) => v / (180 / Math.PI), numnjstoix.radians, true);
 });

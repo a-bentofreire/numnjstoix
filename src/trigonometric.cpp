@@ -8,11 +8,11 @@
 // ------------------------------------------------------------------------
 
 #define _USE_MATH_DEFINES
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <math.h>
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -49,4 +49,4 @@ void initializeTrigonometric(v8exports exports) {
   NODE_SET_METHOD(exports, "radians", radiansFunc);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

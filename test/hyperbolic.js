@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs Hyperbolic functions.
+ * Mocha tests for numnjstoix Hyperbolic functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Test Cases
@@ -20,11 +20,11 @@ const shared = require('./shared.js');
 
 describe('Hyperbolic', function () {
 
-  shared.addTransformCase('sinh', Math.sinh, numnjs.sinh, true);
-  shared.addTransformCase('cosh', Math.cosh, numnjs.cosh, true);
-  shared.addTransformCase('tanh', Math.tanh, numnjs.tanh, true);
+  shared.addTransformCase(describe, 'sinh', Math.sinh, numnjstoix.sinh, true);
+  shared.addTransformCase(describe, 'cosh', Math.cosh, numnjstoix.cosh, true);
+  shared.addTransformCase(describe, 'tanh', Math.tanh, numnjstoix.tanh, true);
 
-  shared.addTransformCase('arcsinh', Math.asinh, numnjs.arcsinh, true);
-  shared.addTransformCase('arccosh', Math.acosh, numnjs.arccosh, true);
-  shared.addTransformCase('arctanh', Math.atanh, numnjs.arctanh, true);
+  shared.addTransformCase(describe, 'arcsinh', Math.asinh, numnjstoix.arcsinh, true);
+  shared.addTransformCase(describe, 'arccosh', Math.acosh, numnjstoix.arccosh, true);
+  shared.addTransformCase(describe, 'arctanh', Math.atanh, numnjstoix.arctanh, true);
 });

@@ -10,7 +10,7 @@
 
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Typedefs
@@ -19,20 +19,20 @@ namespace numnjs {
 typedef v8::FunctionCallbackInfo<v8::Value> v8args;
 typedef v8::Local<v8::Object> v8exports;
 typedef v8::Local<v8::Array> v8localArray;
-typedef std::vector<double> njsarray;
+typedef std::vector<double> njsArray;
 
 // ------------------------------------------------------------------------
-//                               NJS Array Management (njsarrays.cpp)
+//                               NJS Array Management (njsArrays.cpp)
 // ------------------------------------------------------------------------
 
 enum NSJAllow_Type {
-  ta_ARRAY_FLOATARRAY,
-  ta_ARRAY_FLOATARRAY_MATRIX,
-  ta_ARRAY_FLOATARRAY_MATRIX_NUMBER,
+  ta_ARRAY_FLOAT_ARRAY,
+  ta_ARRAY_FLOAT_ARRAY_MATRIX,
+  ta_ARRAY_FLOAT_ARRAY_MATRIX_NUMBER,
   ta_MATRIX,
 };
 
-struct njsallow_typerec {
+struct njs_allow_typerec {
   bool allowNumber;
   bool allowArray;
   bool allowMatrix;
@@ -44,8 +44,8 @@ enum NJSArray_Type {
   typ_NUMBER = 1,
   typ_ARRAY = 10,
   typ_MATRIX,
-  typ_FLOATARRAY32 = 20,
-  typ_FLOATARRAY64
+  typ_FLOAT_ARRAY32 = 20,
+  typ_FLOAT_ARRAY64
 };
 
 /**
@@ -70,7 +70,7 @@ public:
 
   NJSArray_Type arrayType;
   /** Number of dimensions: 0 - number, 1 - Array/TypedArray, 2 - Matrix */
-  size_t nrdims = 1;
+  size_t nrDims = 1;
   /** Number of elements in the first dimension */
   size_t dim1;
   /** Number of elements in the second dimension */
@@ -98,7 +98,7 @@ public:
   v8::Local<v8::Object> res;
   bool isTypedArray;
   /** Number of dimensions: 0 - number, 1 - Array/TypedArray, 2 - Matrix */
-  size_t nrdims;
+  size_t nrDims;
   /** Number of elements in the first dimension */
   size_t dim1;
   /** Number of elements in the second dimension */
@@ -107,7 +107,7 @@ public:
   size_t recSize;
 
   void init(v8::Isolate *isolate, NJSArray_Type arrayType, size_t elCount,
-            size_t nrdims, size_t dim1, size_t dim2);
+            size_t nrDims, size_t dim1, size_t dim2);
 
   void initFromInput(v8::Isolate *isolate, const NJSInputArray &inputArray);
 
@@ -120,7 +120,7 @@ public:
     init(isolate, arrayType, dim, 1, dim, 1);
   }
 
-  void setFromArray(v8::Isolate *isolate, const njsarray &values,
+  void setFromArray(v8::Isolate *isolate, const njsArray &values,
                     const v8args &args);
 };
 
@@ -166,8 +166,8 @@ void NODE_SET_METHOD_DATA(v8::Local<v8::Object> recv, const char *name,
 bool isValidValue(double x);
 
 inline bool isSingleDim(NJSArray_Type arrayType) {
-  return arrayType == typ_ARRAY || arrayType == typ_FLOATARRAY32 ||
-         arrayType == typ_FLOATARRAY64;
+  return arrayType == typ_ARRAY || arrayType == typ_FLOAT_ARRAY32 ||
+         arrayType == typ_FLOAT_ARRAY64;
 }
 
 // ------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void aggregate1Handler(const v8args &args, double acc,
                        bool(initialize)(aggregateParams &params),
                        double(calc)(double v, double acc),
                        double(finalize)(size_t validLen, double acc,
-                                        njsarray &values,
+                                        njsArray &values,
                                         aggregateParams &params),
                        bool reqValues, NSJAllow_Type allowType);
 
@@ -239,7 +239,7 @@ void aggregate1Handler(const v8args &args, double acc,
  * input.
  */
 void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
-                   void(finalize)(size_t validLen, njsarray &values),
+                   void(finalize)(size_t validLen, njsArray &values),
                    bool allowNumber0, bool allowNumber1);
 
 #define binaryCalc1DblExpr(funcName, expr, allowNumber0, allowNumber1)         \
@@ -253,7 +253,7 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
  * and returns a array/matrix input of the same type as the input.
  */
 void transformHandler(const v8args &args, double(calc)(double v),
-                      void(finalize)(size_t validLen, njsarray &values));
+                      void(finalize)(size_t validLen, njsArray &values));
 
 #define transfCalc1DblFunc(funcName, func)                                     \
   void funcName(const v8args &args) {                                          \
@@ -271,7 +271,7 @@ void transformHandler(const v8args &args, double(calc)(double v),
 void generateHandler(const v8args &args, size_t minArgNumber,
                      size_t maxArgNumber,
                      bool(finalize)(v8::Isolate *isolate, const v8args &args,
-                                    njsarray &values,
+                                    njsArray &values,
                                     NJSOutputArray &outArray));
 
 class NArrayInputs {
@@ -282,12 +282,12 @@ public:
 
   std::vector<v8::Local<v8::Value>> valueArgs;
   std::vector<NJSInputArray> inputs;
-  std::vector<njsarray> valuesList;
+  std::vector<njsArray> valuesList;
   std::vector<size_t> validLenList;
 
   NArrayInputs(const v8args &args) { argsp = &args; }
 
-  njsarray outValues;
+  njsArray outValues;
 
   bool init(v8::Isolate *isolate, const v8args &args, size_t numInputs,
             NSJAllow_Type *allowTypes);
@@ -297,7 +297,7 @@ public:
     returnNumber(isolate, outValue, *argsp);
   }
 
-  inline void returnAsArray(const njsarray &outValues,
+  inline void returnAsArray(const njsArray &outValues,
                             NJSArray_Type arrayType) {
     NJSOutputArray outArray;
     outArray.initAsArray(isolate, outValues.size(), arrayType);
@@ -362,4 +362,4 @@ void initializeMatrix(v8exports exports);
  */
 void initializeStatistics(v8exports exports);
 
-} // namespace numnjs
+} // namespace numnjstoix

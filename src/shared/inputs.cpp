@@ -7,10 +7,10 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Errors Messages
@@ -96,4 +96,4 @@ int64_t getArgsData(const v8args &args) {
   return v8::Local<v8::Integer>::Cast(args.Data())->Value();
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

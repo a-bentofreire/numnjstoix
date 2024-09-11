@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs Miscellaneous functions.
+ * Mocha tests for numnjstoix Miscellaneous functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Test Cases
@@ -20,13 +20,13 @@ const shared = require('./shared.js');
 
 describe('Miscellaneous', function () {
 
-  shared.addTransformCase('sqrt', Math.sqrt, numnjs.sqrt, true);
-  shared.addTransformCase('cbrt', Math.cbrt, numnjs.cbrt, true);
-  shared.addTransformCase('square', (v) => v * v, numnjs.square, true);
-  shared.addTransformCase('sign', Math.sign, numnjs.sign, true);
-  shared.addTransformCase('abs', Math.abs, numnjs.abs, true);
-  shared.addBinaryCase('maximum', (v0, v1) => Math.max(v0, v1), numnjs.maximum, true, 'binary');
-  shared.addBinaryCase('minimum', (v0, v1) => Math.min(v0, v1), numnjs.minimum, true, 'binary');
-  shared.addAggregateCase('max', Math.max, numnjs.max, false, 'unary', Number.MIN_VALUE);
-  shared.addAggregateCase('min', Math.min, numnjs.min, false, 'unary', Number.MAX_VALUE);
+  shared.addTransformCase(describe, 'sqrt', Math.sqrt, numnjstoix.sqrt, true);
+  shared.addTransformCase(describe, 'cbrt', Math.cbrt, numnjstoix.cbrt, true);
+  shared.addTransformCase(describe, 'square', (v) => v * v, numnjstoix.square, true);
+  shared.addTransformCase(describe, 'sign', Math.sign, numnjstoix.sign, true);
+  shared.addTransformCase(describe, 'abs', Math.abs, numnjstoix.abs, true);
+  shared.addBinaryCase(describe, 'maximum', (v0, v1) => Math.max(v0, v1), numnjstoix.maximum, true, 'binary');
+  shared.addBinaryCase(describe, 'minimum', (v0, v1) => Math.min(v0, v1), numnjstoix.minimum, true, 'binary');
+  shared.addAggregateCase(describe, 'max', Math.max, numnjstoix.max, false, 'unary', Number.MIN_VALUE);
+  shared.addAggregateCase(describe, 'min', Math.min, numnjstoix.min, false, 'unary', Number.MAX_VALUE);
 });

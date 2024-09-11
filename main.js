@@ -4,12 +4,14 @@
 // ------------------------------------------------------------------------
 "use strict";
 
-const numnjs = require('./build/Release/numnjs');
-module.exports = numnjs;
+import { createRequire } from 'node:module';
+const numnjstoix = createRequire(import.meta.url)('./build/Release/numnjstoix');
 
-numnjs.AUTO = 0;
-numnjs.NUMBER = 1;
-numnjs.ARRAY = 10;
-numnjs.MATRIX = 11;
-numnjs.FLOATARRAY32 = 20;
-numnjs.FLOATARRAY64 = 21;
+numnjstoix.AUTO = 0;
+numnjstoix.NUMBER = 1;
+numnjstoix.ARRAY = 10;
+numnjstoix.MATRIX = 11;
+numnjstoix.FLOAT_ARRAY32 = 20;
+numnjstoix.FLOAT_ARRAY64 = 21;
+
+export { numnjstoix };

@@ -49,5 +49,8 @@
     "string_view": "cpp",
     "algorithm": "cpp",
     "cfloat": "cpp"
-  }
+},
+"cSpell.words": [
+    "numnjstoix"
+]
 }

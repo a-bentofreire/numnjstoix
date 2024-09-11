@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs Rounding functions.
+ * Mocha tests for numnjstoix Rounding functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Expected Functions
@@ -33,7 +33,7 @@ function covFunc(values0, values1) {
 
 describe('Rounding', function () {
 
-  shared.addTransformCase('round', Math.round, numnjs.round, true);
-  shared.addTransformCase('floor', Math.floor, numnjs.floor, true);
-  shared.addTransformCase('ceil', Math.ceil, numnjs.ceil, true);
+  shared.addTransformCase(describe, 'round', Math.round, numnjstoix.round, true);
+  shared.addTransformCase(describe, 'floor', Math.floor, numnjstoix.floor, true);
+  shared.addTransformCase(describe, 'ceil', Math.ceil, numnjstoix.ceil, true);
 });

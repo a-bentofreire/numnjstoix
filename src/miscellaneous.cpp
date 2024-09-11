@@ -7,13 +7,13 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <cfloat>
 #include <cmath>
 #include <limits>
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Aggregate Functions
@@ -32,13 +32,13 @@ binaryCalc1DblExpr(minumumFunc, std::min(v0, v1), false, false)
 void maxFunc(const v8args &args) {
   aggregate1Handler(args, std::numeric_limits<double>::min(), NULL,
                     [](double v, double acc) { return std::max(v, acc); }, NULL,
-                    false, ta_ARRAY_FLOATARRAY_MATRIX);
+                    false, ta_ARRAY_FLOAT_ARRAY_MATRIX);
 }
 
 void minFunc(const v8args &args) {
   aggregate1Handler(args, std::numeric_limits<double>::max(), NULL,
                     [](double v, double acc) { return std::min(v, acc); }, NULL,
-                    false, ta_ARRAY_FLOATARRAY_MATRIX);
+                    false, ta_ARRAY_FLOAT_ARRAY_MATRIX);
 }
 
 // ------------------------------------------------------------------------
@@ -58,4 +58,4 @@ void initializeMiscellaneous(v8exports exports) {
   NODE_SET_METHOD(exports, "min", minFunc);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

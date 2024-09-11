@@ -1,9 +1,10 @@
 {
-  "name": "numnjs",
-  "displayName": "numnjs",
+  "name": "numnjstoix",
+  "displayName": "NumNJsToIx",
   "description": "Lightweight numerical analysis C++ add-on for nodejs",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "publisher": "a-bentofreire",
+  "type": "module",
   "keywords": [
     "data science",
     "numerical analysis",
@@ -24,11 +25,11 @@
   "directories": {
     "test": "test"
   },
-  "homepage": "https://www.devtoix.com/en/projects/numnjs",
-  "bugs": "https://github.com/a-bentofreire/numnjs/issues",
+  "homepage": "https://www.devtoix.com/en/projects/numnjstoix",
+  "bugs": "https://github.com/a-bentofreire/numnjstoix/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a-bentofreire/numnjs.git"
+    "url": "git+https://github.com/a-bentofreire/numnjstoix.git"
   },
   "main": "./main.js",
   "scripts": {
@@ -47,7 +48,7 @@
   },
   "gypfile": true,
   "devDependencies": {
-    "chai": "^4.4.1",
-    "mocha": "^5.2.0"
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3"
   }
 }

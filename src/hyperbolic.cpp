@@ -7,14 +7,14 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <cfloat>
 #include <cmath>
 #include <math.h>
 #include <node.h>
 #include <vector>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -45,4 +45,4 @@ void initializeHyperbolic(v8exports exports) {
   NODE_SET_METHOD(exports, "arctanh", arctanhFunc);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

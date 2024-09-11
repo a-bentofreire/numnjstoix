@@ -7,7 +7,7 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -15,13 +15,13 @@
 #include <node.h>
 #include <vector>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Constants
 // ------------------------------------------------------------------------
 
-#define VERSION "0.2.0"
+#define VERSION "1.0.0"
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -58,4 +58,4 @@ void Initialize(v8exports exports, v8::Local<v8::Value> module, void* priv) {
 
 NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
 
-} // namespace numnjs
+} // namespace numnjstoix

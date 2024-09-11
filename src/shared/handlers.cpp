@@ -7,10 +7,10 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Errors Messages
@@ -26,7 +26,7 @@ void aggregate1Handler(const v8args &args, double acc,
                        bool(initialize)(aggregateParams &params),
                        double(calc)(double v, double acc),
                        double(finalize)(size_t validLen, double acc,
-                                        njsarray &values,
+                                        njsArray &values,
                                         aggregateParams &params),
                        bool reqValues, NSJAllow_Type allowType) {
 
@@ -56,7 +56,7 @@ void aggregate1Handler(const v8args &args, double acc,
     return;
   }
 
-  njsarray validValues;
+  njsArray validValues;
   size_t validLen = 0;
   auto elCount = input.elCount;
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
@@ -84,7 +84,7 @@ void aggregate1Handler(const v8args &args, double acc,
 // ------------------------------------------------------------------------
 
 void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
-                   void(finalize)(size_t validLen, njsarray &values),
+                   void(finalize)(size_t validLen, njsArray &values),
                    bool allowNumber0, bool allowNumber1) {
 
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
@@ -98,8 +98,8 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
   NJSInputArray input0;
 
   if (!input0.init(isolate, arg0,
-                   allowNumber0 ? ta_ARRAY_FLOATARRAY_MATRIX_NUMBER
-                                : ta_ARRAY_FLOATARRAY_MATRIX,
+                   allowNumber0 ? ta_ARRAY_FLOAT_ARRAY_MATRIX_NUMBER
+                                : ta_ARRAY_FLOAT_ARRAY_MATRIX,
                    1)) {
     return;
   }
@@ -108,8 +108,8 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
   NJSInputArray input1;
 
   if (!input1.init(isolate, arg1,
-                   allowNumber1 ? ta_ARRAY_FLOATARRAY_MATRIX_NUMBER
-                                : ta_ARRAY_FLOATARRAY_MATRIX,
+                   allowNumber1 ? ta_ARRAY_FLOAT_ARRAY_MATRIX_NUMBER
+                                : ta_ARRAY_FLOAT_ARRAY_MATRIX,
                    2)) {
     return;
   }
@@ -130,7 +130,7 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
     return;
   }
 
-  njsarray values(elCount0);
+  njsArray values(elCount0);
   size_t validLen = 0;
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
@@ -161,7 +161,7 @@ void binaryHandler(const v8args &args, double(calc)(double v0, double v1),
 // ------------------------------------------------------------------------
 
 void transformHandler(const v8args &args, double(calc)(double v),
-                      void(finalize)(size_t validLen, njsarray &values)) {
+                      void(finalize)(size_t validLen, njsArray &values)) {
 
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
   v8::HandleScope scope(isolate);
@@ -173,13 +173,13 @@ void transformHandler(const v8args &args, double(calc)(double v),
   v8::Local<v8::Value> arg0 = args[0];
   NJSInputArray input;
 
-  if (!input.init(isolate, arg0, ta_ARRAY_FLOATARRAY_MATRIX, 1)) {
+  if (!input.init(isolate, arg0, ta_ARRAY_FLOAT_ARRAY_MATRIX, 1)) {
     return;
   }
 
   size_t validLen = 0;
   auto elCount = input.elCount;
-  njsarray values(elCount);
+  njsArray values(elCount);
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
   for (size_t i = 0; i < elCount; i++) {
     double v = input.getDouble(i, context);
@@ -206,7 +206,7 @@ void transformHandler(const v8args &args, double(calc)(double v),
 void generateHandler(const v8args &args, size_t minArgNumber,
                      size_t maxArgNumber,
                      bool(finalize)(v8::Isolate *isolate, const v8args &args,
-                                    njsarray &values,
+                                    njsArray &values,
                                     NJSOutputArray &outArray)) {
 
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
@@ -216,7 +216,7 @@ void generateHandler(const v8args &args, size_t minArgNumber,
     return;
   }
 
-  njsarray values;
+  njsArray values;
   NJSOutputArray outArray;
   if (!finalize(isolate, args, values, outArray)) {
     return;
@@ -254,7 +254,7 @@ void NArrayInputs::loadData(v8::Isolate *isolate) {
   for (size_t i = 0; i < _numInputs; i++) {
     auto elCount = inputs[i].elCount;
     NJSInputArray &input = inputs[i];
-    njsarray &values = valuesList[i];
+    njsArray &values = valuesList[i];
     values.resize(elCount);
     size_t validLen = 0;
 
@@ -292,4 +292,4 @@ void nInputsHandler(const v8args &args, size_t numInputs, size_t extraArgs,
   }
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

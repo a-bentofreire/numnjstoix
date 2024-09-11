@@ -7,11 +7,11 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <math.h>
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -42,4 +42,4 @@ void initializeExpLogs(v8exports exports) {
   NODE_SET_METHOD(exports, "log2", log2Func);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

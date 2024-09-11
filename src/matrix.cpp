@@ -11,11 +11,11 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <math.h>
 #include <vector>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -47,8 +47,8 @@ void diagonalFunc(const v8args &args) {
       }
     }
 
-    njsarray &values = naInputs.valuesList[0];
-    njsarray outValues(dim);
+    njsArray &values = naInputs.valuesList[0];
+    njsArray outValues(dim);
     size_t at = 0;
     for (size_t i = 0; i < dim; i++) {
       outValues[i] = values[at + i];
@@ -64,7 +64,7 @@ void diagonalFunc(const v8args &args) {
  */
 void eyeFunc(const v8args &args) {
   generateHandler(args, 1, 1,
-                  [](v8::Isolate *isolate, const v8args &args, njsarray &values,
+                  [](v8::Isolate *isolate, const v8args &args, njsArray &values,
                      NJSOutputArray &outArray) {
                     int dim = 0;
                     if (!getPositiveIntInput(isolate, args, 0, dim, true)) {
@@ -83,7 +83,7 @@ void eyeFunc(const v8args &args) {
                   });
 }
 
-bool fillMatrix(v8::Isolate *isolate, const v8args &args, njsarray &values,
+bool fillMatrix(v8::Isolate *isolate, const v8args &args, njsArray &values,
                 NJSOutputArray &outArray, double value,
                 double(callback)() = NULL) {
 
@@ -108,7 +108,7 @@ bool fillMatrix(v8::Isolate *isolate, const v8args &args, njsarray &values,
  */
 void zerosFunc(const v8args &args) {
   generateHandler(args, 2, 2,
-                  [](v8::Isolate *isolate, const v8args &args, njsarray &values,
+                  [](v8::Isolate *isolate, const v8args &args, njsArray &values,
                      NJSOutputArray &outArray) {
                     return fillMatrix(isolate, args, values, outArray, 0.0);
                   });
@@ -119,7 +119,7 @@ void zerosFunc(const v8args &args) {
  */
 void onesFunc(const v8args &args) {
   generateHandler(args, 2, 2,
-                  [](v8::Isolate *isolate, const v8args &args, njsarray &values,
+                  [](v8::Isolate *isolate, const v8args &args, njsArray &values,
                      NJSOutputArray &outArray) {
                     return fillMatrix(isolate, args, values, outArray, 1.0);
                   });
@@ -130,7 +130,7 @@ void onesFunc(const v8args &args) {
  */
 void randFunc(const v8args &args) {
   generateHandler(args, 2, 2,
-                  [](v8::Isolate *isolate, const v8args &args, njsarray &values,
+                  [](v8::Isolate *isolate, const v8args &args, njsArray &values,
                      NJSOutputArray &outArray) {
                     return fillMatrix(isolate, args, values, outArray, 0, []() {
                       return ((double)rand() / (RAND_MAX));
@@ -152,4 +152,4 @@ void initializeMatrix(v8exports exports) {
   NODE_SET_METHOD(exports, "zeros", zerosFunc);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

@@ -7,11 +7,11 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <node.h>
 #include <stdarg.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Errors Messages
@@ -60,4 +60,4 @@ void returnException(v8::Isolate *isolate, const char *msg, ...) {
       v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, buf).ToLocalChecked()));
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

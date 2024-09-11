@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs Sums, products, differences functions.
+ * Mocha tests for numnjstoix Sums, products, differences functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Test Cases
@@ -20,5 +20,5 @@ const shared = require('./shared.js');
 
 describe('Sums, products, differences', function () {
 
-  shared.addAggregateCase('sum', (t, v) => t + v, numnjs.sum, false, 'unary', 0);
+  shared.addAggregateCase(describe, 'sum', (t, v) => t + v, numnjstoix.sum, false, 'unary', 0);
 });

@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs Exponents and logarithms functions.
+ * Mocha tests for numnjstoix Exponents and logarithms functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Test Cases
@@ -20,11 +20,11 @@ const shared = require('./shared.js');
 
 describe('Exponents and logarithms', function () {
 
-  shared.addTransformCase('exp', Math.exp, numnjs.exp, true);
-  shared.addTransformCase('expm1', Math.expm1, numnjs.expm1, true);
-  shared.addTransformCase('exp2', (v) => Math.pow(2, v), numnjs.exp2, true);
+  shared.addTransformCase(describe, 'exp', Math.exp, numnjstoix.exp, true);
+  shared.addTransformCase(describe, 'expm1', Math.expm1, numnjstoix.expm1, true);
+  shared.addTransformCase(describe, 'exp2', (v) => Math.pow(2, v), numnjstoix.exp2, true);
 
-  shared.addTransformCase('log', Math.log, numnjs.log, true);
-  shared.addTransformCase('log10', Math.log10, numnjs.log10, true);
-  shared.addTransformCase('log2', Math.log2, numnjs.log2, true);
+  shared.addTransformCase(describe, 'log', Math.log, numnjstoix.log, true);
+  shared.addTransformCase(describe, 'log10', Math.log10, numnjstoix.log10, true);
+  shared.addTransformCase(describe, 'log2', Math.log2, numnjstoix.log2, true);
 });

@@ -7,10 +7,10 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "../numnjs.h"
+#include "../numnjstoix.h"
 #include <node.h>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Result Functions
@@ -25,4 +25,4 @@ void returnNumber(v8::Isolate *isolate, double value, const v8args &args) {
   args.GetReturnValue().Set(res);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix

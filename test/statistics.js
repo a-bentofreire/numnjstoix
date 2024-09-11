@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------------
 
 /**
- * Mocha tests for numnjs aggregate functions.
+ * Mocha tests for numnjstoix aggregate functions.
  */
 
 // ------------------------------------------------------------------------
 //                               Requires
 // ------------------------------------------------------------------------
 
-const numnjs = require('../main.js');
-const shared = require('./shared.js');
+import { numnjstoix } from '../main.js';
+import * as shared from './shared.js';
 
 // ------------------------------------------------------------------------
 //                               Expected Functions
@@ -54,14 +54,14 @@ function covFunc(values0, values1) {
 
 describe('Statistics', function () {
 
-  shared.addCase('average', averageFunc, numnjs.average, false, 'statistics');
-  shared.addCase('var', varFunc, numnjs.var, false, 'statistics');
-  shared.addCase('std', stdFunc, numnjs.std, false, 'statistics');
-  shared.addCase('kurtosis', kurtosisFunc, numnjs.kurtosis, true, 'statistics');
-  shared.addCase('kurtosis-fisher',
+  shared.addCase(describe, 'average', averageFunc, numnjstoix.average, false, 'statistics');
+  shared.addCase(describe, 'var', varFunc, numnjstoix.var, false, 'statistics');
+  shared.addCase(describe, 'std', stdFunc, numnjstoix.std, false, 'statistics');
+  shared.addCase(describe, 'kurtosis', kurtosisFunc, numnjstoix.kurtosis, true, 'statistics');
+  shared.addCase(describe, 'kurtosis-fisher',
     (v) => kurtosisFunc(v) - 3,
-    (v) => numnjs.kurtosis(v, true),
+    (v) => numnjstoix.kurtosis(v, true),
     true, 'statistics');
-  shared.addCase('cov', covFunc, numnjs.cov, true, 'statistics-binary');
+  shared.addCase(describe, 'cov', covFunc, numnjstoix.cov, true, 'statistics-binary');
 
 });

@@ -7,7 +7,7 @@
 //                               Includes
 // ------------------------------------------------------------------------
 
-#include "numnjs.h"
+#include "numnjstoix.h"
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -15,7 +15,7 @@
 #include <node.h>
 #include <vector>
 
-namespace numnjs {
+namespace numnjstoix {
 
 // ------------------------------------------------------------------------
 //                               Actual Functions
@@ -26,15 +26,15 @@ namespace numnjs {
  */
 void averageFunc(const v8args &args) {
   aggregate1Handler(args, 0, NULL, [](double v, double acc) { return v + acc; },
-                    [](size_t validLen, double acc, njsarray &values,
+                    [](size_t validLen, double acc, njsArray &values,
                        aggregateParams &params) { return acc / validLen; },
-                    false, ta_ARRAY_FLOATARRAY);
+                    false, ta_ARRAY_FLOAT_ARRAY);
 }
 
 /**
  * Internal function to calculate the variance.
  */
-double calcVarFunc(size_t validLen, double acc, njsarray &values,
+double calcVarFunc(size_t validLen, double acc, njsArray &values,
                    aggregateParams &params) {
   const auto avg = acc / validLen;
   double t = 0;
@@ -50,7 +50,7 @@ double calcVarFunc(size_t validLen, double acc, njsarray &values,
  */
 void varFunc(const v8args &args) {
   aggregate1Handler(args, 0, NULL, [](double v, double acc) { return v + acc; },
-                    calcVarFunc, true, ta_ARRAY_FLOATARRAY);
+                    calcVarFunc, true, ta_ARRAY_FLOAT_ARRAY);
 }
 
 /**
@@ -58,11 +58,11 @@ void varFunc(const v8args &args) {
  */
 void stdFunc(const v8args &args) {
   aggregate1Handler(args, 0, NULL, [](double v, double acc) { return v + acc; },
-                    [](size_t validLen, double acc, njsarray &values,
+                    [](size_t validLen, double acc, njsArray &values,
                        aggregateParams &params) {
                       return sqrt(calcVarFunc(validLen, acc, values, params));
                     },
-                    true, ta_ARRAY_FLOATARRAY);
+                    true, ta_ARRAY_FLOAT_ARRAY);
 }
 
 /**
@@ -70,7 +70,7 @@ void stdFunc(const v8args &args) {
  */
 void skewFunc(const v8args &args) {
   aggregate1Handler(args, 0, NULL, [](double v, double acc) { return v + acc; },
-                    [](size_t validLen, double acc, njsarray &values,
+                    [](size_t validLen, double acc, njsArray &values,
                        aggregateParams &params) {
                       const auto avg = acc / validLen;
                       double varAcc = 0;
@@ -84,7 +84,7 @@ void skewFunc(const v8args &args) {
                       const double std_pwr3 = pow(var, 1.5);
                       return (skewAcc / validLen) / std_pwr3;
                     },
-                    true, ta_ARRAY_FLOATARRAY);
+                    true, ta_ARRAY_FLOAT_ARRAY);
 }
 
 /**
@@ -108,7 +108,7 @@ void kurtosisFunc(const v8args &args) {
 
                     [](double v, double acc) { return v + acc; },
 
-                    [](size_t validLen, double acc, njsarray &values,
+                    [](size_t validLen, double acc, njsArray &values,
                        aggregateParams &params) {
                       const auto avg = acc / validLen;
                       double varAcc = 0;
@@ -125,7 +125,7 @@ void kurtosisFunc(const v8args &args) {
                       return resValue + (params.boolValue1 ? -3 : 0);
                     },
 
-                    true, ta_ARRAY_FLOATARRAY);
+                    true, ta_ARRAY_FLOAT_ARRAY);
 }
 
 /**
@@ -133,12 +133,12 @@ void kurtosisFunc(const v8args &args) {
  */
 void covFunc(const v8args &args) {
 
-  NSJAllow_Type allowTypes[] = {ta_ARRAY_FLOATARRAY, ta_ARRAY_FLOATARRAY};
+  NSJAllow_Type allowTypes[] = {ta_ARRAY_FLOAT_ARRAY, ta_ARRAY_FLOAT_ARRAY};
 
   nInputsHandler(args, 2, 0, allowTypes, [](NArrayInputs &naInputs) {
     size_t elCount = naInputs.inputs[0].elCount;
-    njsarray &values0 = naInputs.valuesList[0];
-    njsarray &values1 = naInputs.valuesList[1];
+    njsArray &values0 = naInputs.valuesList[0];
+    njsArray &values1 = naInputs.valuesList[1];
     size_t validLen = naInputs.validLenList[0];
     if (validLen != naInputs.validLenList[1]) {
       returnInputMustSameLen(naInputs.isolate);
@@ -183,4 +183,4 @@ void initializeStatistics(v8exports exports) {
   NODE_SET_METHOD(exports, "cov", covFunc);
 }
 
-} // namespace numnjs
+} // namespace numnjstoix
