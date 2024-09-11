@@ -1,15 +1,15 @@
 # Description
 
-[NumNJsToIx](https://www.devtoix.com/en/projects/numnjstoix) is a lightweight numerical analysis C++ add-on for nodejs.  
-Although, NumNJsToIx has been tested, it's still in a development phase, and its API can change in future versions.  
-At the moment, NumNJsToIx doesn't implement any major speed optimizations to archive maximum speed.  
-It's biggest speed gain derives from the fact that it's implemented in C++ as opposed to JavaScript.  
-However, future versions might be significantly faster by adding of speed optimizations.  
-Many NumNJsToIx functions handle `NaN` and `Infinity` gracefully by bypassing their calculations. Although, this behavior might change in order to speed up the calculations.
+[NumNJsToIX](https://www.devtoix.com/en/projects/numnjstoix) is a lightweight numerical analysis C++ add-on for nodejs.  
+
+At the moment, NumNJsToIX doesn't implement any major speed optimizations to achieve maximum performance.  
+Its biggest speed gain comes from being implemented in C++ rather than JavaScript.  
+Many NumNJsToIX functions handle `NaN` and `Infinity` gracefully by skipping their calculations.  
+However, this behavior might change to further speed up computations.
 
 If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/numnjstoix#support-this-project) on how to contribute.  
 
-Use **NumNJsToIx** when:
+Use **NumNJsToIX** when:
 
 - You don't need a full-blown numerical analysis package.
 - You want a functionality similar to [numpy](http://www.numpy.org/).
@@ -22,12 +22,12 @@ Use **NumNJsToIx** when:
 
 ## Requirements
 
-NumNJsToIx v0.2+ requires node 22.2 or above.
+NumNJsToIX v1.0+ requires node 22.2 or above.
 
-NumNJsToIx uses `node-gyp` to compile the C++ addon to binary format.  
+NumNJsToIX uses `node-gyp` to compile the C++ addon to binary format.  
 So read the [node-gyp](https://www.npmjs.com/package/node-gyp) requirements section to determined what is the required software for your platform.  
   
-NumNJsToIx is implemented in [C++11](https://en.wikipedia.org/wiki/C%2B%2B11), therefore the C++ compiler must support C++11 compilation.
+NumNJsToIX is implemented in [C++11](https://en.wikipedia.org/wiki/C%2B%2B11), therefore the C++ compiler must support C++11 compilation.
 
 ## Data Types
 
@@ -46,14 +46,14 @@ NumNJsToIx is implemented in [C++11](https://en.wikipedia.org/wiki/C%2B%2B11), t
 
 ## Functions Categories
 
-NumNJsToIx is organized into files to resemble the numpy method's organization, as defined in these documents:
+NumNJsToIX is organized into files to resemble the numpy method's organization, as defined in these documents:
 
 - [Mathematical](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.math.html).
 - [Matrix](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.matlib.html).
 - [Statistics](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.statistics.html).
 - [Linear algebra](https://docs.scipy.org/doc/numpy-1.15.4/reference/routines.linalg.html).
 
-But internally, NumNJsToIx functions are organized according to their data inputs and outputs:
+But internally, NumNJsToIX functions are organized according to their data inputs and outputs:
 
 | Category | Description |  
 | ------------- | ------------- |  
