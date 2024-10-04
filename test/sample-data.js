@@ -19,12 +19,12 @@ const sampleData = [{
 },
 {
     label: "Array",
-    p0: [34.4, -56.7, 89.6, 67.5, -66.7],
+    p0: [34.4, -56.7, 89.6, 67.51, -66.7],
     tags: ['unary', 'statistics']
 },
 {
     label: "Float64Array",
-    p0: new Float64Array([-34.4, 56.7, -89.6, 67.5, 66.7]),
+    p0: new Float64Array([-34.4, 56.7, -89.6, 67.51, 66.7]),
     tags: ['unary', 'statistics']
 },
 {

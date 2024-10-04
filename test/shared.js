@@ -193,9 +193,9 @@ function addCase(describe, label, actualFunc, expectFunc, toRound, tag) {
                             ai = safeRound(ai);
                         }
                         if (isValidValue(ei)) {
-                            assert.equal(ei, ai, `Index ${i} failed`);
+                            assert.equal(ei, ai, `Index ${i} failed on sample ${sample.p0[i]}`);
                         } else {
-                            assert.isOk(!isValidValue(ai), `Index ${i} failed`);
+                            assert.isOk(!isValidValue(ai), `Index ${i} failed on sample ${sample.p0[i]}`);
                         }
                     }
 
