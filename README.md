@@ -1,5 +1,8 @@
 # Description
 
+![NPM Version](https://img.shields.io/npm/v/numnjstoix)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-bentofreire/numnjstoix/.github%2Fworkflows%2Fnpm-package.yml)
+
 [NumNJsToIX](https://www.devtoix.com/en/projects/numnjstoix) is a lightweight numerical analysis C++ add-on for nodejs.  
 
 At the moment, NumNJsToIX doesn't implement any major speed optimizations to achieve maximum performance.  
@@ -208,7 +211,10 @@ Example:
 If you find this project useful, consider supporting it:
 
 - Donate:  
+
 [![Donate via PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-rect-paypal-34px.png)](https://www.paypal.com/donate/?business=MCZDHYSK6TCKJ&no_recurring=0&item_name=Support+Open+Source&currency_code=EUR)
+
+[![Buy me a Coffee](https://www.devtoix.com/assets/buymeacoffee-small.png)](https://buymeacoffee.com/abentofreire)
 
 - Visit the project [homepage](https://www.devtoix.com/en/projects/numnjstoix)
 - Give the project a ⭐ on [Github](https://github.com/a-bentofreire/numnjstoix)
